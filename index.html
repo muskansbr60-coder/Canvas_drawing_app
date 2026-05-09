@@ -2,17 +2,20 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pro Drawing App</title>
+    <title>Interactive Drawing App</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
+    <div class="header">
+        <h1>Canvas Drawing App</h1>
+    </div>
+    
     <div class="toolbar">
-        <h3>Drawing Tool</h3>
-        <input type="color" id="colorPicker" title="Change Color">
-        <input type="range" id="brushSize" min="1" max="50" value="5" title="Brush Size">
-        <button id="clearBtn">Clear Screen</button>
+        <label>Brush Color:</label>
+        <input type="color" id="colorPicker">
+        <label>Brush Size:</label>
+        <input type="range" id="brushSize" min="1" max="50" value="5">
+        <button id="clearBtn" class="clear-btn">Clear Screen</button>
     </div>
 
     <canvas id="paintCanvas"></canvas>
