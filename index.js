@@ -1,44 +1,35 @@
-body {
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: #f4f4f9;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
+const canvas = document.getElementById('paintCanvas');
+const ctx = canvas.getContext('2d');
+const colorPicker = document.getElementById('colorPicker');
+const brushSize = document.getElementById('brushSize');
+const clearBtn = document.getElementById('clearBtn');
 
-.toolbar {
-    background: #333;
-    color: white;
-    width: 100%;
-    padding: 15px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-}
+// Canvas Size bura kar diya hai yahan
+canvas.width = 900; 
+canvas.height = 500;
 
-canvas {
-    background: white;
-    margin-top: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 20px rgba(0,0,0,0.1);
-    cursor: crosshair;
-    border: 1px solid #ccc;
-}
+let drawing = false;
 
-button {
-    padding: 8px 15px;
-    background: #ff4757;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: bold;
-}
+canvas.addEventListener('mousedown', () => drawing = true);
+canvas.addEventListener('mouseup', () => { 
+    drawing = false; 
+    ctx.beginPath(); 
+});
 
-button:hover {
-    background: #ff6b81;
-}
+canvas.addEventListener('mousemove', (e) => {
+    if (!drawing) return;
+
+    ctx.lineWidth = brushSize.value; // Brush size yahan se change hoga
+    ctx.strokeStyle = colorPicker.value; // Color yahan se
+    ctx.lineCap = 'round';
+
+    const rect = canvas.getBoundingClientRect();
+    ctx.lineTo(e.clientX - rect.left, e.clientY - rect.top);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(e.clientX - rect.left, e.clientY - rect.top);
+});
+
+clearBtn.addEventListener('click', () => {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+});
